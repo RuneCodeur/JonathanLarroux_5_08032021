@@ -2,25 +2,43 @@
 <html lang="fr-fr">
 <head>
 	<meta charset="utf8"/>
-    <meta name="viewport" content/>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 	<title>Orinoco</title>
 </head>
 <body>
-    <header>
-<div>logo du site</div>
-<div>mon panier</div>
-    </header>
-    <div>
-        <div>merci ^^</div>
-        <div>bien reçu/pas reçu </div>
-        <div>voila ton identifiant de suivi</div>
-        <div>prix</div>
-    </div>
-    <footer>
-        <div>nom de contact</div>
-        <div>numero</div>
-        <div>email</div>
-    </footer>
-</body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="navbar-brand"><a href="index.html"><p class="h1">Orinoco</p></a></div>
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a href="panier.html" class="nav-link p-3 "> 
+                        <i class="fas fa-shopping-cart container-fluid h1"></i> 
+                        <div> mon panier </div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="jumbotron">
+            
+            <div class="confirmation ">
+                <div class="text-center">merci de votre achat</div>
+                <div class="text-center">prix</div>
+                <div class="text-center mt-5">pour suivre votre colis, voici votre identifiant de suivi</div>
+                <div class="text-center">identifiant de suivi</div>
+            </div>
+
+            <div class="error-msg">
+                <div class="text-center"> erreur lors de la confirmation de commande</div>
+            </div>
+        </div>
+
+        <div class="container pb-5">
+            <div class="row"><div class="col-12 text-center"> Contact - Orinoco</div></div>
+            <div class="row"><div class="col-12 text-center"><i class="fas fa-phone-alt mr-2"></i> 08.12.12.12.12</div></div>
+            <div class="row"><div class="col-12 text-center"><i class="fas fa-envelope mr-2"></i>contact@orinoco.com</div></div>
+        </div>
+    </body>
+</div>
 </html>
