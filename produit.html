@@ -20,25 +20,25 @@
             </ul>
         </nav>
 
-        <div class="jumbotron">
-            <img class="card-img-top" src="images/teddy_1.jpg" alt="image teddy">
+        <div class="jumbotron" id="jumbotron">
+
+
+            <img class="card-img-top" id="image" >
+
             <div class="card-body">
-                <div class="card-title"><h1>titre du produit</h1></div>
-                <div class="card-text">description du produit</div>
+                <div class="card-title text-center" id="title"><h1>produit inconnu</h1></div>
+                <div class="card-text" id="description"></div>
                 <form action="">
                     <fieldset>
-                        <label for="color">choix des couleurs</label>
-                        <select name="color" id="color">
-                            <option value="tan"selected>beige</option>
-                            <option value="chocolate">chocolat</option> 
-                            <option value="black">noir</option>
-                            <option value="white">blanc</option>
-                        </select>
+                        <label class="mt-4" for="color">choix des couleurs</label>
+                        <select name="color" id="color"></select>
+
+                <div class="card-text" id="price"></div>
+                <input type="button" value="ajouter à mon panier">
                     </fieldset>
                 </form>
-                <div class="card-text"><h2>99€</h2></div>
-                <input type="button" value="ajouter à mon panier">
             </div>
+
         </div>
 
         <div class="container pb-5">
@@ -46,6 +46,7 @@
             <div class="row"><div class="col-12 text-center"><i class="fas fa-phone-alt mr-2"></i> 08.12.12.12.12</div></div>
             <div class="row"><div class="col-12 text-center"><i class="fas fa-envelope mr-2"></i>contact@orinoco.com</div></div>
         </div>
+        <script src="javaScript/page-select.js"></script>
     </body>
 </div>
 </html>
