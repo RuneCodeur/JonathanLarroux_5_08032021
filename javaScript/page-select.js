@@ -36,6 +36,32 @@ request.onreadystatechange = function() {
         price.innerHTML ="<h2>" + teddyPrice.toFixed(2) + " €</h2>";
 
         /*bouton*/
+        var btn = document.querySelector('input');
+        btn.addEventListener('click', addItem);
+        btn.addEventListener('click', addItemBasket);
+
+        function addItem(){
+            if(sessionStorage.getItem(pageSelection)){
+                let actualBasketCompil = sessionStorage.getItem(pageSelection);
+                actualBasketCompil ++;
+                sessionStorage.setItem (pageSelection, actualBasketCompil);
+                document.location.href ="index.html";
+            }else{
+            sessionStorage.setItem(pageSelection, "1");
+            }
+        }
+
+        function addItemBasket(){
+            if(sessionStorage.getItem("basketNumber")){
+                let actualBasketNumber = sessionStorage.getItem("basketNumber");
+                actualBasketNumber ++;
+                sessionStorage.setItem ("basketNumber", actualBasketNumber);
+                document.location.href ="index.html";
+            }else{
+            sessionStorage.setItem("basketNumber", "1");
+            document.location.href ="index.html";
+            }
+        }
             
 }};
     
