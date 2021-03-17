@@ -13,25 +13,26 @@
             <ul class="navbar-nav">
                 <li class="nav-item active">
                     <a href="panier.html" class="nav-link p-3 "> 
-                        <i class="fas fa-shopping-cart container-fluid h1"></i> 
-                        <div> mon panier </div>
+                        <i class="fas fa-shopping-cart container-fluid h1"></i>
+                        <div class="text-center"> mon panier </div>
+                        <div class="text-center" id="basket">(0)</div>
                     </a>
                 </li>
             </ul>
         </nav>
 
         <div class="jumbotron"> 
+            <div id="test"></div>
             <h1> mon panier</h1>
             <div class="container">
-                <div class="row border">
+                <div class="row justify-content-center">
                     <div class="col-5 border">nom</div>
-                    <div class="col-4 border"> option</div>
                     <div class="col-3 border"> prix</div>
                 </div>
+                <div class="row justify-content-center" id="elementContainer"></div>
 
-                <div class="row border mt-4">
+                <div class="row mt-4 justify-content-center">
                     <div class="col-5 border">prix total</div>
-                    <div class="col-4"></div>
                     <div class="col-3 border">prix</div>
                 </div>
 
@@ -78,6 +79,8 @@
             <div class="row"><div class="col-12 text-center"><i class="fas fa-phone-alt mr-2"></i> 08.12.12.12.12</div></div>
             <div class="row"><div class="col-12 text-center"><i class="fas fa-envelope mr-2"></i>contact@orinoco.com</div></div>
         </div>
+        <script src="javaScript/basket.js"></script>
+        <script src="javaScript/basket-details.js"></script>
     </body>
 </div>
 </html>

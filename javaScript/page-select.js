@@ -1,6 +1,4 @@
 var pageSelection = sessionStorage.getItem('pageSelection');
-let test = document.getElementById('test');
-/* pageSelection;*/
 
 var request = new XMLHttpRequest();
 request.onreadystatechange = function() { 
