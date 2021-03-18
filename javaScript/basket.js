@@ -1,7 +1,13 @@
-var basketNumber = sessionStorage.getItem('basketNumber');
+let count = 0;
+var basketNumber = sessionStorage.getItem('basketItem' + count);
 let basketSelect = document.getElementById('basket');
-if (basketNumber == null){
-    basketSelect.innerText = '(0)';
-}else{
-basketSelect.innerText ='(' + basketNumber + ')';
-}
+calculBasket();
+
+function calculBasket() {
+    if (sessionStorage.getItem('basketItem' + count)) {
+    count ++;
+    calculBasket();
+    basketSelect.innerText = '( '+ count + ' )';
+    }else {
+    basketSelect.innerText ='( 0 )';
+}}

@@ -2,9 +2,9 @@ var pageSelection = sessionStorage.getItem('pageSelection');
 
 var request = new XMLHttpRequest();
 request.onreadystatechange = function() { 
-    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) { 
+    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
         var teddy = JSON.parse(this.responseText);
-
+        
         /*image*/
         let imgItem = document.getElementById('image');
         imgItem.setAttribute("src", teddy[pageSelection]['imageUrl']);
@@ -12,14 +12,14 @@ request.onreadystatechange = function() {
 
         /*titre*/
         let title = document.getElementById("title");
-        title.innerHTML = "<h1>" + teddy[pageSelection]["name"] + "</h1>" ;
+        title.innerHTML = "<h1>" + teddy[pageSelection]["name"] + "</h1>";
 
         /*description*/
         let description = document.getElementById("description");
-        description.innerHTML = teddy[pageSelection]["description"] ;
+        description.innerHTML = teddy[pageSelection]["description"];
 
         /*choix des couleurs */
-        for( let countColors = teddy[pageSelection]["colors"].length-1 ; countColors >= 0; countColors --){
+        for( let countColors = teddy[pageSelection]["colors"].length-1 ; countColors >= 0; countColors --) {
              let ensembleChoice = document.getElementById('color');
              let newColor = document.createElement ('option');
              newColor.setAttribute ("value", teddy[pageSelection]["colors"][countColors]);
@@ -33,34 +33,21 @@ request.onreadystatechange = function() {
         teddyPrice = teddy[pageSelection]["price"]/100;
         price.innerHTML ="<h2>" + teddyPrice.toFixed(2) + " €</h2>";
 
-        /*bouton*/
+        /*bouton qui met dans le panier*/
         var btn = document.querySelector('input');
-        btn.addEventListener('click', addItem);
-        btn.addEventListener('click', addItemBasket);
-
-        function addItem(){
-            if(sessionStorage.getItem(pageSelection)){
-                let actualBasketCompil = sessionStorage.getItem(pageSelection);
-                actualBasketCompil ++;
-                sessionStorage.setItem (pageSelection, actualBasketCompil);
-                document.location.href ="index.html";
-            }else{
-            sessionStorage.setItem(pageSelection, "1");
-            }
-        }
-
-        function addItemBasket(){
-            if(sessionStorage.getItem("basketNumber")){
-                let actualBasketNumber = sessionStorage.getItem("basketNumber");
-                actualBasketNumber ++;
-                sessionStorage.setItem ("basketNumber", actualBasketNumber);
-                document.location.href ="index.html";
-            }else{
-            sessionStorage.setItem("basketNumber", "1");
+        let count = 0;
+        
+        function addItemBasket() {
+            if( sessionStorage.getItem("basketItem" + count)) {
+                count ++;
+                addItemBasket();
+                let test = document.getElementById('test');
+                test.innerText = count;
+            }else {
+            sessionStorage.setItem ("basketItem" + count, pageSelection);
             document.location.href ="index.html";
-            }
-        }
-            
+        }}
+        btn.addEventListener('click', addItemBasket);
 }};
     
 request.open("GET", "http://localhost:3000/api/teddies");
