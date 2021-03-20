@@ -1,5 +1,4 @@
 let count = 0;
-var basketNumber = sessionStorage.getItem('basketItem' + count);
 let basketSelect = document.getElementById('basket');
 calculBasket();
 

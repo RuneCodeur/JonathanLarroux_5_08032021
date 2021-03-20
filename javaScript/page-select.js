@@ -41,8 +41,6 @@ request.onreadystatechange = function() {
             if( sessionStorage.getItem("basketItem" + count)) {
                 count ++;
                 addItemBasket();
-                let test = document.getElementById('test');
-                test.innerText = count;
             }else {
             sessionStorage.setItem ("basketItem" + count, pageSelection);
             document.location.href ="index.html";
