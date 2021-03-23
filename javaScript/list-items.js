@@ -15,7 +15,7 @@ request.onreadystatechange = function() {
             newCard.onclick = select;
             teddyPrice = teddy[count]["price"]/100;
 
-            newCard.innerHTML ='<a href="produit.html" class="select" id="' + count + '"><img class="card-img-top" src="' + teddy[count]["imageUrl"] + '" alt="image de ' + teddy[count]["name"] + ' width="100"><div class="card-body"><div class="card-title"><h2 class="text-center">' + teddy[count]["name"] + '</h2></div><div class="card-text text-center">' + teddyPrice.toFixed(2) +'€</div></div></a>';
+            newCard.innerHTML ='<a href="produit.html" class="select"><img class="card-img-top" src="' + teddy[count]["imageUrl"] + '" alt="image de ' + teddy[count]["name"] + ' width="100"><div class="card-body"><div class="card-title"><h2 class="text-center">' + teddy[count]["name"] + '</h2></div><div class="card-text text-center">' + teddyPrice.toFixed(2) +'€</div></div></a>';
             cardItem.prepend (newCard);
             
 }}};

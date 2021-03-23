@@ -15,20 +15,29 @@ request.onreadystatechange = function() {
 
         /*calcul des elements du panier*/
         let count = countItem - 1;
+        startPrice = 0;
         let listBasket = document.getElementById('listbasket');
-        let finalPrice = 0;
+        /*nettoye le json */
         calculItem();
+    
+        
 
         function calculItem() {
             if(sessionStorage.getItem('basketItem' + count), count > -1) {
                 itemSelect = sessionStorage.getItem('basketItem' + count);
 
+                /*intègre au json */
+
                 /*calcul du prix de chaque elements*/
                 let newItemPrice = document.createElement('div');
-                newItemPrice.classList.add ('col-3');
+                newItemPrice.classList.add ('col-4');
                 newItemPrice.classList.add ('border');
+                newItemPrice.classList.add('col-sm-3');
                 teddyPrice = teddy[itemSelect]["price"]/100;
-                finalPrice += teddyPrice;
+                let finalPrice = new Promise((resolve) =>{
+                    startPrice += teddyPrice;
+                    resolve(startPrice);
+                });
                 newItemPrice.innerHTML = teddyPrice.toFixed(2) + ' €';
                 listBasket.prepend(newItemPrice);
 
@@ -40,13 +49,13 @@ request.onreadystatechange = function() {
                 listBasket.prepend(newItemName);
 
                 /*calcul du prix total*/
+                finalPrice.then((value)=>{
                 let totalPrice = document.getElementById ('total-price');
-                totalPrice.innerHTML = finalPrice.toFixed(2) + ' €';
+                totalPrice.innerHTML = value.toFixed(2) + ' €';
+                });
                 count --;
                 calculItem();
-            }
-}}} 
-
+}}}} 
 request.open("GET", "http://localhost:3000/api/teddies");
 request.send();
 
@@ -55,49 +64,7 @@ function changeStage(){
 document.getElementById('button-finalization').style.display = 'none';
 document.getElementById('fieldset').style.display ='block';
 }
-buttonFinal = document.getElementById('button-finalization')
+buttonFinal = document.getElementById('button-finalization');
 buttonFinal.onclick = changeStage;
 
-/*promises
-à chaque changement d'etat (touche au clavier)
-lance une fonction avec pleins de if
-pour chaque if, renvoie une promise qui dit l'erreur
-si il n'y a pas d'erreur, débloque le bouton*/
-
-var formular = document.getElementById('formulaire')
-
-/*function changement(){
-    let test = document.getElementById('test');
-    testtest = document.createElement('div');
-    testtest.innerHTML ='ok';
-    test.prepend(testtest);
-}*/
-
-let button = document.getElementById('button').disabled="false";
-function sendData(data){
-    let test = document.getElementById('test');
-    test.innerHTML = data['test'];
-    /*alert('test');*/
-}
-
-/*exemple de base pour le formulaire */
-/* chaque ligne du formulaire donne une promise et balance une erreur suivant le resultat*/
-/*const clef = true;
-
-function fonctionale (resolve, reject) {
-    if(clef){
-    console.log ("han");
-    resolve ('bien vu');
-
-    }else{
-    console.log ("fiotte");
-    reject ('merde');
-}}
-
-var projet = new Promise (fonctionale);
-projet.then (function(data){ 
-    console.log ('sa  marche ! ' + data);
-});
-projet.catch (function(data) { 
-    console.log ("t'es qu'un gros con " + data);
-})*/
+/*final button, envoie le formulaire puis le json */

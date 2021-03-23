@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf8"/>
     <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=430 initial-scale=1"/>
+    <meta name="viewport" content="width=350 initial-scale= 0.9"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 	<title>Orinoco</title>
 </head>
@@ -22,23 +22,23 @@
             </ul>
         </nav>
 
-        <div class="jumbotron"> 
+        <div class="jumbotron">
             <h1> mon panier</h1>
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-5 border">nom</div>
-                    <div class="col-3 border"> prix</div>
+                    <div class="col-5  border">nom</div>
+                    <div class="col-4 col-sm-3 border"> prix</div>
                 </div>
                 <div class="row justify-content-center" id="listbasket"> 
             </div>
 
                 <div class="row mt-4 justify-content-center">
-                    <div class="col-5 border">prix total</div>
-                    <div class="col-4 border" id="total-price"></div>
+                    <div class="col-5 border text-right">prix total : </div>
+                    <div class="col-4 col-sm-3 border" id="total-price"></div>
                 </div>
 
-                <div class="row mt-4 justify-content-center" id="button-finalization">
-                    <input class="btn btn-primary" type="button" value="finaliser mes achats">
+                <div class="row mt-4 justify-content-center" >
+                    <input class="btn btn-primary" id="button-finalization" type="button" value="finaliser mes achats">
                 </div>
             </div>
 
@@ -47,29 +47,28 @@
                     <div class="my-5 ">
                         <div class="row m-1 justify-content-center">
                             <label class="col-3 col-md-2" for="firstName">nom</label>
-                            <input class="col-5" type="text" name="firstName" id="firstName" placeholder="françois" pattern="^\D*$" required onKeypress="changement()" >
+                            <input class="col-5" type="text" name="firstName" id="firstName" placeholder="françois" pattern="[A-Z][A-Za-z' -]+" required >
                         </div>
                         <div class="row m-1 justify-content-center">
                             <label class="col-3 col-md-2" for="lastName">prénom</label>
-                            <input class="col-5" type="text" name="lastName" id="lastName" placeholder="Lechateau" pattern="^\D*$" required>
+                            <input class="col-5" type="text" name="lastName" id="lastName" placeholder="Lechateau" pattern="[A-Za-z' -]+" required>
                         </div>
                         <div class="row m-1 justify-content-center">
                             <label class="col-3 col-md-2" for="adress">adresse</label>
-                            <input class="col-5" type="text" name="adress" id="adress" placeholder="12 rue de la Paix" pattern="^\D*$" required>
+                            <input class="col-5" type="text" name="adress" id="adress" placeholder="12 rue de la Paix" pattern="[A-Za-z' - 0-9]+" required>
                         </div>
                         <div class="row m-1 justify-content-center">
                             <label class="col-3 col-md-2" for="city">ville</label>
-                            <input class="col-5" type="text" name="city" id="city" placeholder="Paris" pattern="^\D*$" required>
+                            <input class="col-5" type="text" name="city" id="city" placeholder="Paris" pattern="[A-Za-z' -]+" required>
                         </div>
                         <div class="row m-1 justify-content-center">
                             <label class="col-3 col-md-2" for="mail">e-mail</label>
-                            <input class="col-5" type="email" name="mail" id="mail" placeholder="françois@gmail.com" pattern="^\D*$" required>
+                            <input class="col-5" type="email" name="mail" id="mail" placeholder="françois@gmail.com" required >
                         </div>
                     </div>
-                    <div class="row justify-content-center"><input type="submit" class="btn btn-primary" value="confirmer mon achat" onclick="sendData({test:'ok'})" id="button"> </div>
+                    <div class="row justify-content-center"><input type="submit" class="btn btn-primary" value="confirmer mon achat" onclick="sendData({test:'ok'})" id="finalButton"> </div>
                 </fieldset>
             </form>
-            <div id="test"></div>
             
             <div>
             </div>

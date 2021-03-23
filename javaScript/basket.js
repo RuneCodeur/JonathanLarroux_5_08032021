@@ -7,4 +7,6 @@ function calculBasket() {
     count ++;
     calculBasket();
     return count;
+}else {
+    return 0;
 }}
