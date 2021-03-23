@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf8"/>
     <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=430 initial-scale=1"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 	<title>Orinoco</title>
 </head>
@@ -15,7 +16,7 @@
                     <a href="panier.html" class="nav-link p-3 "> 
                         <i class="fas fa-shopping-cart container-fluid h1"></i>
                         <div class="text-center"> mon panier </div>
-                        <div class="text-center" id="basket">(0)</div>
+                        <div class="text-center" id="basket">( 0 )</div>
                     </a>
                 </li>
             </ul>
@@ -28,45 +29,47 @@
                     <div class="col-5 border">nom</div>
                     <div class="col-3 border"> prix</div>
                 </div>
-                <div class="row justify-content-center" id="listbasket"></div>
+                <div class="row justify-content-center" id="listbasket"> 
+            </div>
 
                 <div class="row mt-4 justify-content-center">
                     <div class="col-5 border">prix total</div>
-                    <div class="col-3 border">prix</div>
+                    <div class="col-4 border" id="total-price"></div>
                 </div>
 
-                <div class="row mt-4 justify-content-center">
+                <div class="row mt-4 justify-content-center" id="button-finalization">
                     <input class="btn btn-primary" type="button" value="finaliser mes achats">
                 </div>
             </div>
 
-            <form action="" >
-                <fieldset>
-                    <div class="my-5">
-                        <div class="row m-1">
-                            <label class="col-3" for="firstName">nom</label>
-                            <input class="col-5" type="text" name="firstName" id="firstName">
+            <form action="" method="post" id="formulaire">
+                <fieldset id="fieldset" style="display: none">
+                    <div class="my-5 ">
+                        <div class="row m-1 justify-content-center">
+                            <label class="col-3 col-md-2" for="firstName">nom</label>
+                            <input class="col-5" type="text" name="firstName" id="firstName" placeholder="françois" pattern="^\D*$" required onKeypress="changement()" >
                         </div>
-                        <div class="row m-1">
-                            <label class="col-3" for="lastName">prénom</label>
-                            <input class="col-5" type="text" name="lastName" id="lastName">
+                        <div class="row m-1 justify-content-center">
+                            <label class="col-3 col-md-2" for="lastName">prénom</label>
+                            <input class="col-5" type="text" name="lastName" id="lastName" placeholder="Lechateau" pattern="^\D*$" required>
                         </div>
-                        <div class="row m-1">
-                            <label class="col-3" for="adress">adresse</label>
-                            <input class="col-5" type="text" name="adress" id="adress">
+                        <div class="row m-1 justify-content-center">
+                            <label class="col-3 col-md-2" for="adress">adresse</label>
+                            <input class="col-5" type="text" name="adress" id="adress" placeholder="12 rue de la Paix" pattern="^\D*$" required>
                         </div>
-                        <div class="row m-1">
-                            <label class="col-3" for="city">ville</label>
-                            <input class="col-5" type="text" name="city" id="city">
+                        <div class="row m-1 justify-content-center">
+                            <label class="col-3 col-md-2" for="city">ville</label>
+                            <input class="col-5" type="text" name="city" id="city" placeholder="Paris" pattern="^\D*$" required>
                         </div>
-                        <div class="row m-1">
-                            <label class="col-3" for="mail">e-mail</label>
-                            <input class="col-5" type="mail" name="mail" id="mail">
+                        <div class="row m-1 justify-content-center">
+                            <label class="col-3 col-md-2" for="mail">e-mail</label>
+                            <input class="col-5" type="email" name="mail" id="mail" placeholder="françois@gmail.com" pattern="^\D*$" required>
                         </div>
                     </div>
-                    <div class="row justify-content-center"><input type="submit" class="btn btn-primary" value="confirmer mon achat"></div>
+                    <div class="row justify-content-center"><input type="submit" class="btn btn-primary" value="confirmer mon achat" onclick="sendData({test:'ok'})" id="button"> </div>
                 </fieldset>
             </form>
+            <div id="test"></div>
             
             <div>
             </div>
