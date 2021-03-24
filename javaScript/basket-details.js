@@ -1,12 +1,10 @@
 /* calcul du nombre max du panier*/
 let countItem = 0;
-maxCalculBasket();
+basket.then((value)=> {
+    countItem = value;
+});
 
-function maxCalculBasket() {
-    if (sessionStorage.getItem('basketItem' + countItem)) {
-    countItem ++;
-    maxCalculBasket();
-}}
+let myJSON = [];
 
 var request = new XMLHttpRequest();
 request.onreadystatechange = function() {
@@ -17,24 +15,21 @@ request.onreadystatechange = function() {
         let count = countItem - 1;
         startPrice = 0;
         let listBasket = document.getElementById('listbasket');
-        /*nettoye le json */
         calculItem();
-    
-        
 
         function calculItem() {
             if(sessionStorage.getItem('basketItem' + count), count > -1) {
                 itemSelect = sessionStorage.getItem('basketItem' + count);
 
-                /*intègre au json */
-
+                myJSON.push (teddy[itemSelect]['_id']);
+                
                 /*calcul du prix de chaque elements*/
                 let newItemPrice = document.createElement('div');
                 newItemPrice.classList.add ('col-4');
                 newItemPrice.classList.add ('border');
                 newItemPrice.classList.add('col-sm-3');
-                teddyPrice = teddy[itemSelect]["price"]/100;
-                let finalPrice = new Promise((resolve) =>{
+                let teddyPrice = teddy[itemSelect]["price"]/100;
+                let finalPrice = new Promise((resolve) => {
                     startPrice += teddyPrice;
                     resolve(startPrice);
                 });
@@ -50,8 +45,8 @@ request.onreadystatechange = function() {
 
                 /*calcul du prix total*/
                 finalPrice.then((value)=>{
-                let totalPrice = document.getElementById ('total-price');
-                totalPrice.innerHTML = value.toFixed(2) + ' €';
+                    let totalPrice = document.getElementById ('total-price');
+                    totalPrice.innerHTML = value.toFixed(2) + ' €';
                 });
                 count --;
                 calculItem();
@@ -61,10 +56,86 @@ request.send();
 
 /*bouton finaliser ma commande*/
 function changeStage(){
-document.getElementById('button-finalization').style.display = 'none';
-document.getElementById('fieldset').style.display ='block';
+    document.getElementById('button-transition').style.display = 'none';
+    document.getElementById('fieldset').style.display ='block';
 }
-buttonFinal = document.getElementById('button-finalization');
-buttonFinal.onclick = changeStage;
 
-/*final button, envoie le formulaire puis le json */
+buttonTransition = document.getElementById('button-transition');
+buttonTransition.onclick = changeStage;
+
+/*analyse la validité de chaque element du formulaire*/
+let firstNameValidate= false;
+let lastNameValidate= false;
+let adressValidate= false;
+let cityNameValidate= false;
+let mailNameValidate= false;
+let finalButton = document.getElementById('finalButton');
+
+function verificationFirstName(){
+    let firstName = document.getElementById('firstName'); 
+    if (firstName.validity.valid == false){
+        firstNameValidate = false;
+        buttonValidation();
+    }else{
+       firstNameValidate = true;
+       buttonValidation();
+}}
+
+function verificationlastName(){
+    let lastName = document.getElementById('lastName'); 
+    if (lastName.validity.valid == false){
+        lastNameValidate= false;
+        buttonValidation();
+    }else{
+        lastNameValidate= true;
+        buttonValidation();
+}}
+
+function verificationAdress(){
+    let adress = document.getElementById('adress'); 
+    if (adress.validity.valid == false){
+        adressValidate= false;
+        buttonValidation();
+    }else{
+        adressValidate= true;
+        buttonValidation();
+}}
+
+function verificationCity(){
+    let city = document.getElementById('city'); 
+    if (city.validity.valid == false){
+        cityNameValidate= false;
+        buttonValidation();
+    }else{
+        cityNameValidate= true;
+        buttonValidation();
+}}
+
+function verificationMail(){
+    let mail = document.getElementById('mail'); 
+    if (mail.validity.valid == false){
+        mailNameValidate= false;
+        buttonValidation();
+    }else{
+        mailNameValidate= true;
+        buttonValidation();
+}}
+
+/*fait apparaitre le bouton de validation du formulaire*/
+function buttonValidation(){
+    if((firstNameValidate == true) && (lastNameValidate == true) && (adressValidate == true) && (cityNameValidate == true) && (mailNameValidate == true)){ 
+    finalButton.disabled = false;
+    }else{
+        finalButton.disabled = true;
+}}
+
+/*envoie les données au click du bouton de validation du formulaire*/
+finalButton.addEventListener('click', sendData);
+
+function sendData(){
+    var variable = new XMLHttpRequest(); 
+    request.open("POST", "http://localhost:3000/api/teddies"); 
+    request.setRequestHeader("Content-Type", "application/json"); 
+    request.send(JSON.stringify(myJSON));
+    document.location.href ="confirmation.html";
+}

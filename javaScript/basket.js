@@ -1,12 +1,16 @@
-let count = 0;
-let basketSelect = document.getElementById('basket');
-basketSelect.innerText = '( '+ calculBasket() + ' )';
+let basket = new Promise((resolve) =>{
+    let count = 0;
+    promiseBasket();
+    
+    function promiseBasket(){
+        if (sessionStorage.getItem('basketItem' + count)) {
+            count ++;
+            promiseBasket();
+    }}
+    resolve(count);
+});
 
-function calculBasket() {
-    if (sessionStorage.getItem('basketItem' + count)) {
-    count ++;
-    calculBasket();
-    return count;
-}else {
-    return 0;
-}}
+basket.then((value)=> {
+    let basketSelect = document.getElementById('basket');
+    basketSelect.innerText = '( '+ value + ' )';
+});

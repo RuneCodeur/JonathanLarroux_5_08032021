@@ -23,6 +23,7 @@
         </nav>
 
         <div class="jumbotron">
+            <div id="test"></div>
             <h1> mon panier</h1>
             <div class="container">
                 <div class="row justify-content-center">
@@ -38,7 +39,7 @@
                 </div>
 
                 <div class="row mt-4 justify-content-center" >
-                    <input class="btn btn-primary" id="button-finalization" type="button" value="finaliser mes achats">
+                    <input class="btn btn-primary" id="button-transition" type="button" value="finaliser mes achats">
                 </div>
             </div>
 
@@ -47,26 +48,27 @@
                     <div class="my-5 ">
                         <div class="row m-1 justify-content-center">
                             <label class="col-3 col-md-2" for="firstName">nom</label>
-                            <input class="col-5" type="text" name="firstName" id="firstName" placeholder="françois" pattern="[A-Z][A-Za-z' -]+" required >
+                            <input class="col-5" type="text" name="firstName" id="firstName" placeholder="françois" pattern="[A-Za-z' -]+" required onkeyup="verificationFirstName()">
                         </div>
                         <div class="row m-1 justify-content-center">
                             <label class="col-3 col-md-2" for="lastName">prénom</label>
-                            <input class="col-5" type="text" name="lastName" id="lastName" placeholder="Lechateau" pattern="[A-Za-z' -]+" required>
+                            <input class="col-5" type="text" name="lastName" id="lastName" placeholder="Lechateau" pattern="[A-Za-z' -]+" required onkeyup="verificationlastName()">
                         </div>
                         <div class="row m-1 justify-content-center">
                             <label class="col-3 col-md-2" for="adress">adresse</label>
-                            <input class="col-5" type="text" name="adress" id="adress" placeholder="12 rue de la Paix" pattern="[A-Za-z' - 0-9]+" required>
+                            <input class="col-5" type="text" name="adress" id="adress" placeholder="12 rue de la Paix" pattern="[A-Za-z' - 0-9]+" required onkeyup="verificationAdress()">
                         </div>
                         <div class="row m-1 justify-content-center">
                             <label class="col-3 col-md-2" for="city">ville</label>
-                            <input class="col-5" type="text" name="city" id="city" placeholder="Paris" pattern="[A-Za-z' -]+" required>
+                            <input class="col-5" type="text" name="city" id="city" placeholder="Paris" pattern="[A-Za-z' -]+" required onkeyup="verificationCity()">
                         </div>
                         <div class="row m-1 justify-content-center">
                             <label class="col-3 col-md-2" for="mail">e-mail</label>
-                            <input class="col-5" type="email" name="mail" id="mail" placeholder="françois@gmail.com" required >
+                            <input class="col-5" type="email" name="mail" id="mail" placeholder="françois@gmail.com" required onkeyup="verificationMail()">
                         </div>
                     </div>
-                    <div class="row justify-content-center"><input type="submit" class="btn btn-primary" value="confirmer mon achat" onclick="sendData({test:'ok'})" id="finalButton"> </div>
+                    <div id="indicator"></div>
+                    <div class="row justify-content-center"><input type="submit" class="btn btn-primary" value="confirmer mon achat" id="finalButton" disabled></div>
                 </fieldset>
             </form>
             
