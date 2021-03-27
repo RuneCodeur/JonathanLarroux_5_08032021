@@ -1,38 +1,47 @@
-/* calcul du nombre max du panier*/
-let countItem = 0;
-basket.then((value)=> {
-    countItem = value;
-});
 
-let myJSON = [];
+let arrayJSON= [];
+let firstNameValidate= false;
+let lastNameValidate= false;
+let adressValidate= false;
+let cityNameValidate= false;
+let mailNameValidate= false;
+let ValueFirstName= document.getElementById('firstName');
+let valueLastName= document.getElementById('lastName');
+let valueAdress= document.getElementById('adress');
+let valueCityName= document.getElementById('city');
+let valueMail= document.getElementById('mail');
+let finalButton = document.getElementById('finalButton');
 
 var request = new XMLHttpRequest();
 request.onreadystatechange = function() {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
         var teddy = JSON.parse(this.responseText);
-
-        /*calcul des elements du panier*/
-        let count = countItem - 1;
-        startPrice = 0;
         let listBasket = document.getElementById('listbasket');
+        let countItem = 0;
+        startPrice = 0;
+        calculBasket();
+        let count = countItem - 1;
         calculItem();
 
+        /* calcul du nombre max du panier*/
+        function calculBasket() {
+            if (sessionStorage.getItem('basketItem' + countItem)) {
+            countItem ++;
+            calculBasket();
+        }}
+        /*calcul du panier */
         function calculItem() {
             if(sessionStorage.getItem('basketItem' + count), count > -1) {
                 itemSelect = sessionStorage.getItem('basketItem' + count);
-
-                myJSON.push (teddy[itemSelect]['_id']);
+                arrayJSON.push (teddy[itemSelect]['_id']);
                 
                 /*calcul du prix de chaque elements*/
                 let newItemPrice = document.createElement('div');
+                let teddyPrice = teddy[itemSelect]["price"]/100;
                 newItemPrice.classList.add ('col-4');
                 newItemPrice.classList.add ('border');
                 newItemPrice.classList.add('col-sm-3');
-                let teddyPrice = teddy[itemSelect]["price"]/100;
-                let finalPrice = new Promise((resolve) => {
-                    startPrice += teddyPrice;
-                    resolve(startPrice);
-                });
+                startPrice += teddyPrice;
                 newItemPrice.innerHTML = teddyPrice.toFixed(2) + ' €';
                 listBasket.prepend(newItemPrice);
 
@@ -44,33 +53,43 @@ request.onreadystatechange = function() {
                 listBasket.prepend(newItemName);
 
                 /*calcul du prix total*/
-                finalPrice.then((value)=>{
-                    let totalPrice = document.getElementById ('total-price');
-                    totalPrice.innerHTML = value.toFixed(2) + ' €';
-                });
+                let totalPrice = document.getElementById ('total-price');
+                totalPrice.innerHTML = startPrice.toFixed(2) + ' €';
                 count --;
                 calculItem();
-}}}} 
+        }}}
+
+        /*bouton finaliser ma commande*/
+        buttonTransition = document.getElementById('button-transition');
+        buttonTransition.onclick = changeStage;
+
+        function changeStage(){
+            document.getElementById('button-transition').style.display = 'none';
+            document.getElementById('fieldset').style.display ='block';
+            sessionStorage.setItem("totalPrice", startPrice);
+        }
+
+        /*envoie les données au click du bouton de validation du formulaire*/
+        function sendForm() {
+            var request = new XMLHttpRequest(); /*déclare la requete */
+            request.onload = function () {/*fait un truc avec le chargement de la requete */
+                if (request.readyState == request.DONE && request.status == 201) { /*si la requete est terminé et que la requete serveur affiche 200 */
+                    document.location.href ="confirmation.html";
+            }};
+            request.open('POST', 'http://localhost:3000/api/teddies/order');/*ouvvre la requete */
+            request.setRequestHeader('Content-Type', 'application/json'); /*balance les infos de base au serveur */
+            let json = {contact: {firstName: ValueFirstName, lastName: valueLastName, address: valueAdress, city: valueCityName, email: valueMail}, products: arrayJSON};/* déclare les données à envoyer */
+            request.send(JSON.stringify(json)); /*balance la sauce*/       
+        }
+
+        finalButton.addEventListener('click', (event) => {
+        sendForm();
+        event.preventDefault();/*bloque le comportement par défaut du request (ouvrir le fichier request) */
+})} 
 request.open("GET", "http://localhost:3000/api/teddies");
 request.send();
 
-/*bouton finaliser ma commande*/
-function changeStage(){
-    document.getElementById('button-transition').style.display = 'none';
-    document.getElementById('fieldset').style.display ='block';
-}
-
-buttonTransition = document.getElementById('button-transition');
-buttonTransition.onclick = changeStage;
-
 /*analyse la validité de chaque element du formulaire*/
-let firstNameValidate= false;
-let lastNameValidate= false;
-let adressValidate= false;
-let cityNameValidate= false;
-let mailNameValidate= false;
-let finalButton = document.getElementById('finalButton');
-
 function verificationFirstName(){
     let firstName = document.getElementById('firstName'); 
     if (firstName.validity.valid == false){
@@ -128,14 +147,3 @@ function buttonValidation(){
     }else{
         finalButton.disabled = true;
 }}
-
-/*envoie les données au click du bouton de validation du formulaire*/
-finalButton.addEventListener('click', sendData);
-
-function sendData(){
-    var variable = new XMLHttpRequest(); 
-    request.open("POST", "http://localhost:3000/api/teddies"); 
-    request.setRequestHeader("Content-Type", "application/json"); 
-    request.send(JSON.stringify(myJSON));
-    document.location.href ="confirmation.html";
-}

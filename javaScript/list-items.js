@@ -1,6 +1,6 @@
 var request = new XMLHttpRequest();
 request.onreadystatechange = function() { 
-    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) { 
+    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
         var teddy = JSON.parse(this.responseText);
         
         for(let count = teddy.length-1; count >= 0; count --){
@@ -19,6 +19,5 @@ request.onreadystatechange = function() {
             cardItem.prepend (newCard);
             
 }}};
-    
 request.open("GET", "http://localhost:3000/api/teddies");
 request.send();

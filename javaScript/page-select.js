@@ -36,6 +36,7 @@ request.onreadystatechange = function() {
         /*bouton qui met dans le panier*/
         var btn = document.querySelector('input');
         let count = 0;
+        btn.addEventListener('click', addItemBasket);
         
         function addItemBasket() {
             if( sessionStorage.getItem("basketItem" + count)) {
@@ -45,8 +46,6 @@ request.onreadystatechange = function() {
             sessionStorage.setItem ("basketItem" + count, pageSelection);
             document.location.href ="index.html";
         }}
-        btn.addEventListener('click', addItemBasket);
 }};
-    
 request.open("GET", "http://localhost:3000/api/teddies");
 request.send();
