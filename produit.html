@@ -22,19 +22,19 @@
             </ul>
         </nav>
         <div class="jumbotron" id="jumbotron">
-
+            <div class="text-center alert-danger" id="errorMsg"></div>
             <img class="card-img-top" id="image" >
 
             <div class="card-body">
-                <div class="card-title text-center" id="title"><h1>produit inconnu</h1></div>
+                <div class="card-title text-center" id="title"><h1></h1></div>
                 <div class="card-text" id="description"></div>
-                <form action="">
+                <form>
                     <fieldset>
-                        <label class="mt-4" for="color">choix de la couleur :</label>
-                        <select name="color" id="color"></select>
+                        <label class="mt-4" for="color" id="textColor"></label>
+                        <select name="color" id="color" style="display: none"></select>
 
                         <div class="card-text" id="price"></div>
-                        <input type="button" value="ajouter à mon panier">
+                        <input type="button" id="addBasket" value="ajouter à mon panier" style="display: none">
                     </fieldset>
                 </form>
             </div>

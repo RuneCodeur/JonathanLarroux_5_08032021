@@ -23,14 +23,14 @@
         </nav>
 
         <div class="jumbotron">
-            <h1> mon panier</h1>
-            <div class="container">
+            <h1 class="text-center"> mon panier</h1>
+            <div  class="text-center alert-danger" id="errorMsg"></div>
+            <div class="container" id="myBasket" style="display: none">
                 <div class="row justify-content-center">
                     <div class="col-5  border">nom</div>
                     <div class="col-4 col-sm-3 border"> prix</div>
                 </div>
-                <div class="row justify-content-center" id="listbasket"> 
-            </div>
+                <div class="row justify-content-center" id="listbasket"></div>
 
                 <div class="row mt-4 justify-content-center">
                     <div class="col-5 border text-right">prix total : </div>
@@ -66,6 +66,7 @@
                             <input class="col-5" type="email" name="mail" id="mail" placeholder="françois@gmail.com" required onkeyup="verificationMail()">
                         </div>
                     </div>
+                    <div id="test"></div>
                     <div class="row justify-content-center"><input type="submit" class="btn btn-primary" value="confirmer mon achat" id="finalButton" disabled></div>
                 </fieldset>
             </form>

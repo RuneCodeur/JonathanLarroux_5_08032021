@@ -21,18 +21,15 @@
                 </li>
             </ul>
         </nav>
-
         <div class="jumbotron">
+            <div id="erreur"></div>
+            <div id="container-produit"></div>
             
-            <div class="confirmation ">
+            <div class="confirmation">
                 <div class="text-center">merci de votre achat</div>
-                <div class="text-center">prix</div>
+                <div class="text-center">votre compte à été débité de <b id="price">0 €</b></div>
                 <div class="text-center mt-5">pour suivre votre colis, voici votre identifiant de suivi</div>
-                <div class="text-center">identifiant de suivi</div>
-            </div>
-
-            <div class="error-msg">
-                <div class="text-center"> erreur lors de la confirmation de commande</div>
+                <div class="text-center mt-2 font-weight-bold" id="orderId"></div>
             </div>
         </div>
 
@@ -42,6 +39,7 @@
             <div class="row"><div class="col-12 text-center"><i class="fas fa-envelope mr-2"></i>contact@orinoco.com</div></div>
         </div>
         <script src="javaScript/basket.js"></script>
+        <script src="javaScript/confirmation.js"></script>
     </body>
 </div>
 </html>
