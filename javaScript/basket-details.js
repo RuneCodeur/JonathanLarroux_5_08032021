@@ -29,49 +29,56 @@ new Promise(function(resolve, reject){
 }).then (function(teddy){
     document.getElementById('myBasket').style.display = 'block';
     let listBasket = document.getElementById('listbasket');
-    let countItem = 0;
+    let basketItem = JSON.parse(sessionStorage.getItem("basketItem")).reverse();
+    let countmax = 0;
     startPrice = 0;
-    calculBasket();
-    let count = countItem - 1;
-    calculItem();
 
-    /* calcul du nombre max du panier*/
-    function calculBasket() {
-        if (sessionStorage.getItem('basketItem' + countItem)) {
-        countItem ++;
-        calculBasket();
-    }}
     /*calcul du panier */
-    function calculItem() {
-        if(sessionStorage.getItem('basketItem' + count), count > -1) {
-            itemSelect = sessionStorage.getItem('basketItem' + count);
-            arrayJSON.push (teddy[itemSelect]['_id']);
-                
-            /*calcul du prix de chaque elements*/
-            let newItemPrice = document.createElement('div');
-            let teddyPrice = teddy[itemSelect]["price"]/100;
-            newItemPrice.classList.add ('col-4');
-            newItemPrice.classList.add ('border');
-            newItemPrice.classList.add('col-sm-3');
-            startPrice += teddyPrice;
-            newItemPrice.innerHTML = teddyPrice.toFixed(2) + ' €';
-            listBasket.prepend(newItemPrice);
+    for(let item of basketItem ){
+        arrayJSON.push (teddy[item]['_id']);
 
-            /*calcul du nom de chaque elements*/
-            let newItemName = document.createElement('div');
-            newItemName.classList.add ('col-5');
-            newItemName.classList.add ('border');
-            newItemName.innerHTML = teddy[itemSelect]['name'];
-            listBasket.prepend(newItemName);
+        
+        /*calcul du prix de chaque elements*/
+        let newItemPrice = document.createElement('div');
+        let teddyPrice = teddy[item]["price"]/100;
+        newItemPrice.classList.add ('col-4');
+        newItemPrice.classList.add ('border');
+        newItemPrice.classList.add('col-sm-3');
+        startPrice += teddyPrice;
+        newItemPrice.innerHTML = teddyPrice.toFixed(2) + ' €';
+        listBasket.prepend(newItemPrice);
 
-            /*calcul du prix total*/
-            let totalPrice = document.getElementById ('total-price');
-            totalPrice.innerHTML = startPrice.toFixed(2) + ' €';
-            count --;
-            calculItem();
-    }}
+        /*calcul du nom de chaque elements*/
+        let newItemName = document.createElement('div');
+        newItemName.classList.add ('col-5');
+        newItemName.classList.add ('border');
+        newItemName.innerHTML = teddy[item]['name'];
+        listBasket.prepend(newItemName);
 
-    /*bouton finaliser*/
+        /*bouton supprimer*/
+        let newbuttonSup = document. createElement('div');
+        newbuttonSup.classList.add ("col-2");
+        newbuttonSup.classList.add ("col-sm-3");
+        newbuttonSup.classList.add ("text-right");
+        newbuttonSup.innerHTML='<input class="btn btn-danger my-1" type="button" id="buttonX" value="X">';
+        listBasket.prepend(newbuttonSup);
+            
+        let buttonX = document.getElementById('buttonX');
+        buttonX.onclick = supBasket;
+        let countsup = countmax;
+        countmax ++;
+        function supBasket() {
+            basketItem.splice(countsup, 1);
+            basketItem.reverse()
+            sessionStorage.setItem("basketItem", JSON.stringify(basketItem));
+           document.location.href ="panier.html";
+        }
+        /*calcul du prix total*/
+        let totalPrice = document.getElementById ('total-price');
+        totalPrice.innerHTML = startPrice.toFixed(2) + ' €';
+    }
+
+    /*bouton finaliser ma commande*/
     buttonTransition = document.getElementById('button-transition');
     buttonTransition.onclick = changeStage;
 
@@ -112,6 +119,7 @@ new Promise(function(resolve){
 
 }).then (function(responseServer){
     sessionStorage.setItem("orderId", responseServer['orderId'])
+    sessionStorage.removeItem('basketItem')
     document.location.href ="confirmation.html";
 }).catch (function(error){
     let blocError = document.getElementById('errorMsg');

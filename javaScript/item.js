@@ -47,16 +47,19 @@ new Promise(function(resolve, reject){
     /*bouton qui met dans le panier*/
     var btn = document.querySelector('input');
     btn.style.display ="block";
-    let count = 0;
     btn.addEventListener('click', addItemBasket);
     
     function addItemBasket() {
-        if( sessionStorage.getItem("basketItem" + count)) {
-            count ++;
-            addItemBasket();
+        if( sessionStorage.getItem("basketItem")){
+            let basketItem = JSON.parse(sessionStorage.getItem("basketItem"));
+           basketItem.push(pageSelection);
+           sessionStorage.setItem("basketItem", JSON.stringify(basketItem));
+           document.location.href ="index.html";
+            
         }else {
-        sessionStorage.setItem ("basketItem" + count, pageSelection);
-        document.location.href ="index.html";
+            let basketArray = [pageSelection];
+            sessionStorage.setItem ("basketItem", JSON.stringify(basketArray,));
+            document.location.href ="index.html";
     }}
     
 }).catch (function(error){

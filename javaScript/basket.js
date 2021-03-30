@@ -1,10 +1,11 @@
-let count = 0;
-let basketSelect = document.getElementById('basket');
 calculBasket();
-basketSelect.innerText = '( '+ count + ' )';
 
-function calculBasket() {
-    if (sessionStorage.getItem('basketItem' + count)) {
-    count ++;
-    calculBasket();
+function calculBasket(){
+    if (sessionStorage.getItem("basketItem")){
+        let maxBasketItem = JSON.parse(sessionStorage.getItem("basketItem")).length;
+        let basketSelect = document.getElementById('basket');
+        basketSelect.innerText = '( '+ maxBasketItem + ' )';
+    }else{
+        let basketSelect = document.getElementById('basket');
+        basketSelect.innerText = '( 0 )';
 }}
