@@ -6,6 +6,7 @@ function calculBasket(){
         let basketSelect = document.getElementById('basket');
         basketSelect.innerText = '( '+ maxBasketItem + ' )';
     }else{
+        sessionStorage.setItem ("basketItem", JSON.stringify([]));
         let basketSelect = document.getElementById('basket');
         basketSelect.innerText = '( 0 )';
 }}

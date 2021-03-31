@@ -1,18 +1,11 @@
-
 let arrayJSON= [];
-let firstNameValidate= false;
-let lastNameValidate= false;
-let adressValidate= false;
-let cityNameValidate= false;
-let mailNameValidate= false;
-let nobutton= document.getElementById('nobutton');
+let noButton= document.getElementById('noButton');
 let ValueFirstName= document.getElementById('firstName');
 let valueLastName= document.getElementById('lastName');
 let valueAdress= document.getElementById('adress');
 let valueCityName= document.getElementById('city');
 let valueMail= document.getElementById('mail');
 let finalButton = document.getElementById('finalButton');
-/* */
 
 new Promise(function(resolve, reject){
     var xhr = new XMLHttpRequest();
@@ -33,6 +26,7 @@ new Promise(function(resolve, reject){
     let basketItem = JSON.parse(sessionStorage.getItem("basketItem")).reverse();
     let countmax = 0;
     startPrice = 0;
+    
 
     /*calcul du panier */
     for(let item of basketItem ){
@@ -137,71 +131,25 @@ new Promise(function(resolve){
     blocError.innerHTML = error;
     console.log(error);})
 
-/*analyse la validité de chaque element du formulaire*/
-function verificationFirstName(){
-    let firstName = document.getElementById('firstName'); 
-    if (firstName.validity.valid == false){
-        firstNameValidate = false;
-        buttonValidation();
-    }else{
-       firstNameValidate = true;
-       buttonValidation();
-}}
-
-function verificationlastName(){
-    let lastName = document.getElementById('lastName'); 
-    if (lastName.validity.valid == false){
-        lastNameValidate= false;
-        buttonValidation();
-    }else{
-        lastNameValidate= true;
-        buttonValidation();
-}}
-
-function verificationAdress(){
-    let adress = document.getElementById('adress'); 
-    if (adress.validity.valid == false){
-        adressValidate= false;
-        buttonValidation();
-    }else{
-        adressValidate= true;
-        buttonValidation();
-}}
-
-function verificationCity(){
-    let city = document.getElementById('city'); 
-    if (city.validity.valid == false){
-        cityNameValidate= false;
-        buttonValidation();
-    }else{
-        cityNameValidate= true;
-        buttonValidation();
-}}
-
-function verificationMail(){
-    let mail = document.getElementById('mail'); 
-    if (mail.validity.valid == false){
-        mailNameValidate= false;
-        buttonValidation();
-    }else{
-        mailNameValidate= true;
-        buttonValidation();
-}}
-
 /*fait apparaitre le bouton de validation du formulaire*/
 function buttonValidation(){
-    if((firstNameValidate == true) && (lastNameValidate == true) && (adressValidate == true) && (cityNameValidate == true) && (mailNameValidate == true)){
-    nobutton.style.display ='none';
+    let firstName = document.getElementById('firstName');
+    let lastName = document.getElementById('lastName'); 
+    let adress = document.getElementById('adress');
+    let city = document.getElementById('city'); 
+    let mail = document.getElementById('mail'); 
+    if((firstName.validity.valid == true) && (lastName.validity.valid == true) && (adress.validity.valid == true) && (city.validity.valid == true) && (mail.validity.valid == true)){
+    noButton.style.display ='none';
     let msgNoComplete = document.getElementById('msgNoComplete');
     msgNoComplete.innerText ='';
 
     }else{
-    nobutton.style.display ='block';
+    noButton.style.display ='block';
     let msgNoComplete = document.getElementById('msgNoComplete');
     msgNoComplete.innerText ='';
 }}
 
-nobutton.addEventListener('click',function() {
+noButton.addEventListener('click',function() {
     let msgNoComplete = document.getElementById('msgNoComplete');
     msgNoComplete.innerText ='veuillez correctement remplire le formulaire';
 })

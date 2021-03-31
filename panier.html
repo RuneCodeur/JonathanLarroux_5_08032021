@@ -48,27 +48,27 @@
                     <div class="my-5 ">
                         <div class="row m-1 justify-content-center">
                             <label class="col-3 col-md-2" for="firstName">nom</label>
-                            <input class="col-5" type="text" name="firstName" id="firstName" placeholder="françois" pattern="[A-Za-z' -]+" required onkeyup="verificationFirstName()">
+                            <input class="col-5" type="text" name="firstName" id="firstName" placeholder="françois" pattern="[A-Za-z' -]+" required onkeyup="buttonValidation()">
                         </div>
                         <div class="row m-1 justify-content-center">
                             <label class="col-3 col-md-2" for="lastName">prénom</label>
-                            <input class="col-5" type="text" name="lastName" id="lastName" placeholder="Lechateau" pattern="[A-Za-z' -]+" required onkeyup="verificationlastName()">
+                            <input class="col-5" type="text" name="lastName" id="lastName" placeholder="Lechateau" pattern="[A-Za-z' -]+" required onkeyup="buttonValidation()">
                         </div>
                         <div class="row m-1 justify-content-center">
                             <label class="col-3 col-md-2" for="adress">adresse</label>
-                            <input class="col-5" type="text" name="adress" id="adress" placeholder="12 rue de la Paix" pattern="[A-Za-z' - 0-9]+" required onkeyup="verificationAdress()">
+                            <input class="col-5" type="text" name="adress" id="adress" placeholder="12 rue de la Paix" pattern="[A-Za-z' - 0-9]+" required onkeyup="buttonValidation()">
                         </div>
                         <div class="row m-1 justify-content-center">
                             <label class="col-3 col-md-2" for="city">ville</label>
-                            <input class="col-5" type="text" name="city" id="city" placeholder="Paris" pattern="[A-Za-z' -]+" required onkeyup="verificationCity()">
+                            <input class="col-5" type="text" name="city" id="city" placeholder="Paris" pattern="[A-Za-z' -]+" required onkeyup="buttonValidation()">
                         </div>
                         <div class="row m-1 justify-content-center">
                             <label class="col-3 col-md-2" for="mail">e-mail</label>
-                            <input class="col-5" type="email" name="mail" id="mail" placeholder="françois@gmail.com" required onkeyup="verificationMail()">
+                            <input class="col-5" type="email" name="mail" id="mail" placeholder="françois@gmail.com" required onkeyup="buttonValidation()">
                         </div>
                     </div>
                     <div class="row justify-content-center" style="height: 0;"><div class="text-center alert-danger mb-2" id="msgNoComplete"></div></div>
-                    <div class="row justify-content-center mt-5" style="height: 0;"><div id='nobutton' style="position:relative; padding: 18px 86px; display: block;"></div></div>
+                    <div class="row justify-content-center mt-5" style="height: 0;"><div id='noButton' style="position:relative; padding: 18px 86px;"></div></div>
                     <div class="row justify-content-center"><input type="submit" class="btn btn-primary" value="confirmer mon achat" id="finalButton"></div>
                 </fieldset>
             </form>
