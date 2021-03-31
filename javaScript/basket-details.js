@@ -5,6 +5,7 @@ let lastNameValidate= false;
 let adressValidate= false;
 let cityNameValidate= false;
 let mailNameValidate= false;
+let nobutton= document.getElementById('nobutton');
 let ValueFirstName= document.getElementById('firstName');
 let valueLastName= document.getElementById('lastName');
 let valueAdress= document.getElementById('adress');
@@ -44,6 +45,7 @@ new Promise(function(resolve, reject){
         newItemPrice.classList.add ('col-4');
         newItemPrice.classList.add ('border');
         newItemPrice.classList.add('col-sm-3');
+        newItemPrice.classList.add('py-1');
         startPrice += teddyPrice;
         newItemPrice.innerHTML = teddyPrice.toFixed(2) + ' €';
         listBasket.prepend(newItemPrice);
@@ -60,7 +62,7 @@ new Promise(function(resolve, reject){
         newbuttonSup.classList.add ("col-2");
         newbuttonSup.classList.add ("col-sm-3");
         newbuttonSup.classList.add ("text-right");
-        newbuttonSup.innerHTML='<input class="btn btn-danger my-1" type="button" id="buttonX" value="X">';
+        newbuttonSup.innerHTML='<input class="btn btn-danger buttonSup py-0" type="button" id="buttonX" value="X">';
         listBasket.prepend(newbuttonSup);
             
         let buttonX = document.getElementById('buttonX');
@@ -83,9 +85,13 @@ new Promise(function(resolve, reject){
     buttonTransition.onclick = changeStage;
 
     function changeStage(){
+        let buttonSup = document.getElementsByClassName('buttonSup');
         document.getElementById('button-transition').style.display = 'none';
         document.getElementById('fieldset').style.display ='block';
         sessionStorage.setItem("totalPrice", startPrice.toFixed(2) + ' €');
+        for(var count=0; count < buttonSup.length; count++) {
+                buttonSup[count].style.display='none';
+            }
 
 /*bouton confirmer */
 new Promise(function(resolve){
@@ -184,8 +190,18 @@ function verificationMail(){
 
 /*fait apparaitre le bouton de validation du formulaire*/
 function buttonValidation(){
-    if((firstNameValidate == true) && (lastNameValidate == true) && (adressValidate == true) && (cityNameValidate == true) && (mailNameValidate == true)){ 
-    finalButton.disabled = false;
+    if((firstNameValidate == true) && (lastNameValidate == true) && (adressValidate == true) && (cityNameValidate == true) && (mailNameValidate == true)){
+    nobutton.style.display ='none';
+    let msgNoComplete = document.getElementById('msgNoComplete');
+    msgNoComplete.innerText ='';
+
     }else{
-        finalButton.disabled = true;
+    nobutton.style.display ='block';
+    let msgNoComplete = document.getElementById('msgNoComplete');
+    msgNoComplete.innerText ='';
 }}
+
+nobutton.addEventListener('click',function() {
+    let msgNoComplete = document.getElementById('msgNoComplete');
+    msgNoComplete.innerText ='veuillez correctement remplire le formulaire';
+})
