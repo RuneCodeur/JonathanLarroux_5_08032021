@@ -19,7 +19,7 @@ new Promise(function(resolve, reject){
         newCard.classList.add("m-4");
 
         function select(){
-            sessionStorage.setItem("pageSelection", count);
+            sessionStorage.setItem("pageSelection", teddy[count]["_id"]);
         }
         newCard.onclick = select;
         teddyPrice = teddy[count]["price"]/100;
