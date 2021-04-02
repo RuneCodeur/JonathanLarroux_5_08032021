@@ -13,28 +13,33 @@ startPrice = 0;
     
 /*calcul du panier*/
 if(basketItem.length > 0) {
+    /*fait patienter le client durant le calcul du panier*/
+    let calcul = document.getElementById("calculMsg");
+    calcul.innerText = "Calcul de votre panier en cours...";
+    /*pour chaque item dans le panier */
     for(let item of basketItem ) {
-        let calcul = document.getElementById("calculMsg");
-        calcul.innerText = "calcul de votre panier en cours...";
         setTimeout(function() { 
+            /*crée un appel serveur pour chaque item dans le panier*/
             new Promise(function(resolve, reject) {
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function() {
-                    if(this.readyState == 4 && this.status ===200) {
+                    if(this.readyState == 4 && this.status === 200) {
                         var teddy = JSON.parse(this.responseText);
                         resolve(teddy);
                     }else if(this.readyState == 4 && this.status != 200) {
-                        reject("le site est actuellement indisponible");
+                        reject("Le site est actuellement indisponible");
                 }}
                 xhr.open("GET", "http://localhost:3000/api/teddies/"+ item);
                 xhr.send();
-            
+
             }).then(function(teddy) {
+                /*fait apparaitre les éléments de base du panier*/
                 document.getElementById("myBasket").style.display = "block";
                 calcul.style.display = "none";
+                /*met chaque élément du panier dans un array*/
                 arrayJSON.push(teddy["_id"]);
 
-                /*calcul du prix de chaque elements*/
+                /*crée le bloc et calcul du prix de chaque élément*/
                 let newItemPrice = document.createElement("div");
                 let teddyPrice = teddy["price"]/100;
                 newItemPrice.classList.add("col-4");
@@ -45,14 +50,14 @@ if(basketItem.length > 0) {
                 newItemPrice.innerHTML = teddyPrice.toFixed(2) + " €";
                 listBasket.prepend(newItemPrice);
 
-                /*calcul du nom de chaque elements*/
+                /*crée le bloc et calcul du nom de chaque elements*/
                 let newItemName = document.createElement("div");
                 newItemName.classList.add("col-5");
                 newItemName.classList.add("border");
                 newItemName.innerHTML = teddy["name"];
                 listBasket.prepend(newItemName);
 
-                /*bouton supprimer*/
+                /*crée le bouton supprimer*/
                 let newbuttonSup = document. createElement("div");
                 newbuttonSup.classList.add("col-2");
                 newbuttonSup.classList.add("col-sm-3");
@@ -60,9 +65,10 @@ if(basketItem.length > 0) {
                 newbuttonSup.innerHTML = '<input class="btn btn-danger buttonSup py-0" type="button" id="buttonX" value="X">';
                 listBasket.prepend(newbuttonSup);
                 
+                /*crée le comportement du bouton supprimer*/
                 let buttonX = document.getElementById("buttonX");
-                buttonX.onclick = supBasket;
                 let countSup = countmax;
+                buttonX.onclick = supBasket;
                 countmax ++;
                 function supBasket() {
                     basketItem.splice(countSup, 1);
@@ -78,15 +84,15 @@ if(basketItem.length > 0) {
                 let blocError = document.getElementById("errorMsg");
                 blocError.innerText = error;
                 console.log(error);
+/*si aucun item est présent dans le panier*/
 })}, 2000)}}else {
         let blocError = document.getElementById("errorMsg");
-        blocError.innerText = "vous n'avez rien mis dans votre panier !";
+        blocError.innerText = "Vous n'avez rien mis dans votre panier !";
     }
 
-    /*bouton finaliser ma commande*/
+    /* crée le comportement du bouton finaliser mes achats*/
     buttonTransition = document.getElementById("button-transition");
     buttonTransition.onclick = changeStage;
-
     function changeStage() {
         let buttonSup = document.getElementsByClassName("buttonSup");
         document.getElementById("button-transition").style.display = "none";
@@ -96,7 +102,35 @@ if(basketItem.length > 0) {
                 buttonSup[count].style.display = "none";
     }}
 
-/*bouton confirmer*/
+/*partie finaliser ma commande*/
+
+/*calcul la validité de chaque élément du formulaire*/
+function buttonValidation() {
+    let firstName = document.getElementById("firstName");
+    let lastName = document.getElementById("lastName"); 
+    let adress = document.getElementById("adress");
+    let city = document.getElementById("city"); 
+    let mail = document.getElementById("mail"); 
+    /*si tout les éléments du formulaire sont valide, tu libère le bouton*/
+    if((firstName.validity.valid == true) && (lastName.validity.valid == true) && (adress.validity.valid == true) && (city.validity.valid == true) && (mail.validity.valid == true)) {
+    noButton.style.display = "none";
+    let msgNoComplete = document.getElementById("msgNoComplete");
+    msgNoComplete.innerText = '';
+    
+    /*sinon, tu bloque le bouton*/
+    }else {
+    noButton.style.display = "block";
+    let msgNoComplete = document.getElementById("msgNoComplete");
+    msgNoComplete.innerText = '';
+}}
+
+/*si tu essaie de valider un formulaire non valide, tu signale au client*/
+noButton.addEventListener("click",function() {
+    let msgNoComplete = document.getElementById("msgNoComplete");
+    msgNoComplete.innerText = "veuillez correctement remplire le formulaire";
+})
+
+/*bouton confirmer mon achat */
 new Promise(function(resolve){
     finalButton.addEventListener("click",function(event) {
     event.preventDefault();
@@ -126,6 +160,7 @@ new Promise(function(resolve){
     };
     sendForm.send(JSON.stringify(json));
 
+/*envoie dans le session storage les infos utilisé pour la page confirmation*/
 }).then(function(responseServer) {
     sessionStorage.setItem("orderId", responseServer["orderId"])
     sessionStorage.removeItem("basketItem")
@@ -135,26 +170,3 @@ new Promise(function(resolve){
     blocError.innerText = error;
     console.log(error);
 })})
-
-/*fait apparaitre le bouton de validation du formulaire*/
-function buttonValidation() {
-    let firstName = document.getElementById("firstName");
-    let lastName = document.getElementById("lastName"); 
-    let adress = document.getElementById("adress");
-    let city = document.getElementById("city"); 
-    let mail = document.getElementById("mail"); 
-    if((firstName.validity.valid == true) && (lastName.validity.valid == true) && (adress.validity.valid == true) && (city.validity.valid == true) && (mail.validity.valid == true)) {
-    noButton.style.display = "none";
-    let msgNoComplete = document.getElementById("msgNoComplete");
-    msgNoComplete.innerText = '';
-
-    }else {
-    noButton.style.display = "block";
-    let msgNoComplete = document.getElementById("msgNoComplete");
-    msgNoComplete.innerText = '';
-}}
-
-noButton.addEventListener("click",function() {
-    let msgNoComplete = document.getElementById("msgNoComplete");
-    msgNoComplete.innerText = "veuillez correctement remplire le formulaire";
-})
