@@ -35,5 +35,4 @@ new Promise(function(resolve, reject) {
 }).catch(function(error){
     let blocError = document.getElementById('errorMsg');
     blocError.innerText = error;
-    console.log(error);
 })

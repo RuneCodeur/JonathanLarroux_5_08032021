@@ -13,96 +13,74 @@ startPrice = 0;
 
 /*calcul du panier*/
 if(basketItem.length > 0) {
-    /*fait patienter le client durant le calcul du panier*/
-    let calcul = document.getElementById("calculMsg");
-    calcul.innerText = "Calcul de votre panier en cours...";
-    /*pour chaque item dans le panier */
-    for(let item of basketItem) {
-        setTimeout(function() { 
-            /*crée un appel serveur pour chaque item dans le panier*/
-            new Promise(function(resolve, reject) {
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function() {
-                    if(this.readyState == 4 && this.status === 200) {
-                        var teddy = JSON.parse(this.responseText);
-                        resolve(teddy);
-                    }else if(this.readyState == 4 && this.status != 200) {
-                        reject("Le site est actuellement indisponible");
-                }}
-                xhr.open("GET", "http://localhost:3000/api/teddies/"+ item);
-                xhr.send();
+    /*fait apparaitre l'interface du panier*/
+    document.getElementById("myBasket").style.display = "block";
+    /*pour chaque teddy dans le panier */
+    for(let teddy of basketItem) {
+        /*met chaque élément du panier dans un array(pour la finalisation de la commande)*/
+        arrayJSON.push(teddy["_id"]);
 
-            /*crée les éléments du panier*/
-            }).then(function(teddy) {
-                document.getElementById("myBasket").style.display = "block";
-                calcul.style.display = "none";
-                /*met chaque élément du panier dans un array*/
-                arrayJSON.push(teddy["_id"]);
+        /*crée le bloc et calcul du prix de chaque élément*/
+        let newItemPrice = document.createElement("div");
+        let teddyPrice = teddy["price"]/100;
+        newItemPrice.classList.add("col-4");
+        newItemPrice.classList.add("border");
+        newItemPrice.classList.add("col-sm-3");
+        newItemPrice.classList.add("py-1");
+        startPrice += teddyPrice;
+        newItemPrice.innerHTML = teddyPrice.toFixed(2) + " €";
+        listBasket.prepend(newItemPrice);
 
-                /*crée le bloc et calcul du prix de chaque élément*/
-                let newItemPrice = document.createElement("div");
-                let teddyPrice = teddy["price"]/100;
-                newItemPrice.classList.add("col-4");
-                newItemPrice.classList.add("border");
-                newItemPrice.classList.add("col-sm-3");
-                newItemPrice.classList.add("py-1");
-                startPrice += teddyPrice;
-                newItemPrice.innerHTML = teddyPrice.toFixed(2) + " €";
-                listBasket.prepend(newItemPrice);
+        /*crée le bloc et calcul du nom de chaque elements*/
+        let newItemName = document.createElement("div");
+        newItemName.classList.add("col-5");
+        newItemName.classList.add("border");
+        newItemName.innerHTML = teddy["name"];
+        listBasket.prepend(newItemName);
 
-                /*crée le bloc et calcul du nom de chaque elements*/
-                let newItemName = document.createElement("div");
-                newItemName.classList.add("col-5");
-                newItemName.classList.add("border");
-                newItemName.innerHTML = teddy["name"];
-                listBasket.prepend(newItemName);
-
-                /*crée le bouton supprimer*/
-                let newbuttonSup = document. createElement("div");
-                newbuttonSup.classList.add("col-2");
-                newbuttonSup.classList.add("col-sm-3");
-                newbuttonSup.classList.add("text-right");
-                newbuttonSup.innerHTML = '<input class="btn btn-danger buttonSup py-0" type="button" id="buttonX" value="X">';
-                listBasket.prepend(newbuttonSup);
+        /*crée le bouton supprimer*/
+        let newbuttonSup = document. createElement("div");
+        newbuttonSup.classList.add("col-2");
+        newbuttonSup.classList.add("col-sm-3");
+        newbuttonSup.classList.add("text-right");
+        newbuttonSup.innerHTML = '<input class="btn btn-danger buttonSup py-0" type="button" id="buttonX" value="X">';
+        listBasket.prepend(newbuttonSup);
                 
-                /*crée le comportement du bouton supprimer*/
-                let buttonX = document.getElementById("buttonX");
-                let countSup = countmax;
-                buttonX.onclick = supBasket;
-                countmax ++;
-                function supBasket() {
-                    basketItem.splice(countSup, 1);
-                    basketItem.reverse();
-                    sessionStorage.setItem("basketItem", JSON.stringify(basketItem));
-                    document.location.href ="panier.html";
-                }
+        /*crée le comportement du bouton supprimer*/
+        let buttonX = document.getElementById("buttonX");
+        let countSup = countmax;
+        buttonX.onclick = supBasket;
+        countmax ++;
+        function supBasket() {
+            basketItem.splice(countSup, 1);
+            basketItem.reverse();
+            sessionStorage.setItem("basketItem", JSON.stringify(basketItem));
+            document.location.href ="panier.html";
+        }
 
-                /*calcul du prix total*/
-                let totalPrice = document.getElementById ("total-price");
-                totalPrice.innerText = startPrice.toFixed(2) + " €";
+        /*calcul du prix total*/
+        let totalPrice = document.getElementById ("total-price");
+        totalPrice.innerText = startPrice.toFixed(2) + " €";
 
-            }).catch(function(error) {
-                let blocError = document.getElementById("errorMsg");
-                blocError.innerText = error;
 /*si aucun item est présent dans le panier*/
-})}, 2000)}}else {
+}}else {
         let blocError = document.getElementById("errorMsg");
         blocError.innerText = "Vous n'avez rien mis dans votre panier !";
-    }
+}
 
-    /* crée le comportement du bouton finaliser mes achats*/
-    buttonTransition = document.getElementById("button-transition");
-    buttonTransition.onclick = changeStage;
-    function changeStage() {
-        let buttonSup = document.getElementsByClassName("buttonSup");
-        document.getElementById("button-transition").style.display = "none";
-        document.getElementById("fieldset").style.display = "block";
-        sessionStorage.setItem("totalPrice", startPrice.toFixed(2) + " €");
-        for(var count = 0; count < buttonSup.length; count++) {
-                buttonSup[count].style.display = "none";
-    }}
+/* crée le comportement du bouton finaliser mes achats*/
+buttonTransition = document.getElementById("button-transition");
+buttonTransition.onclick = changeStage;
+function changeStage() {
+    let buttonSup = document.getElementsByClassName("buttonSup");
+    document.getElementById("button-transition").style.display = "none";
+    document.getElementById("fieldset").style.display = "block";
+    sessionStorage.setItem("totalPrice", startPrice.toFixed(2) + " €");
+    for(var count = 0; count < buttonSup.length; count++) {
+        buttonSup[count].style.display = "none";
+}}
 
-/*partie finaliser ma commande*/
+/******partie finaliser ma commande******/
 
 /*calcul la validité de chaque élément du formulaire*/
 function buttonValidation() {

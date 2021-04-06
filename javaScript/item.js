@@ -55,14 +55,14 @@ if(sessionStorage.getItem("pageSelection")) {
         /*calcul du comportement du bouton ajouter*/
         function addItemBasket() {
             let basketItem = JSON.parse(sessionStorage.getItem("basketItem"));
-            basketItem.push(pageSelection);
+            let infoItem = {_id:teddy["_id"], name:teddy["name"], price: teddy["price"]}
+            basketItem.push(infoItem);
             sessionStorage.setItem("basketItem", JSON.stringify(basketItem));
             document.location.href = "index.html";
         }
     }).catch(function(error) {
         let blocError = document.getElementById("errorMsg");
         blocError.innerText = error;
-        console.log(error);
 
 /*si pageSelection n'est pas présent dans le session storage*/
 })}else {
