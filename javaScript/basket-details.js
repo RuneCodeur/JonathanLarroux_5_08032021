@@ -10,14 +10,14 @@ let listBasket = document.getElementById("listbasket");
 let arrayJSON = [];
 let countmax = 0;
 startPrice = 0;
-    
+
 /*calcul du panier*/
 if(basketItem.length > 0) {
     /*fait patienter le client durant le calcul du panier*/
     let calcul = document.getElementById("calculMsg");
     calcul.innerText = "Calcul de votre panier en cours...";
     /*pour chaque item dans le panier */
-    for(let item of basketItem ) {
+    for(let item of basketItem) {
         setTimeout(function() { 
             /*crée un appel serveur pour chaque item dans le panier*/
             new Promise(function(resolve, reject) {
@@ -32,8 +32,8 @@ if(basketItem.length > 0) {
                 xhr.open("GET", "http://localhost:3000/api/teddies/"+ item);
                 xhr.send();
 
+            /*crée les éléments du panier*/
             }).then(function(teddy) {
-                /*fait apparaitre les éléments de base du panier*/
                 document.getElementById("myBasket").style.display = "block";
                 calcul.style.display = "none";
                 /*met chaque élément du panier dans un array*/
@@ -76,6 +76,7 @@ if(basketItem.length > 0) {
                     sessionStorage.setItem("basketItem", JSON.stringify(basketItem));
                     document.location.href ="panier.html";
                 }
+
                 /*calcul du prix total*/
                 let totalPrice = document.getElementById ("total-price");
                 totalPrice.innerText = startPrice.toFixed(2) + " €";
@@ -83,7 +84,6 @@ if(basketItem.length > 0) {
             }).catch(function(error) {
                 let blocError = document.getElementById("errorMsg");
                 blocError.innerText = error;
-                console.log(error);
 /*si aucun item est présent dans le panier*/
 })}, 2000)}}else {
         let blocError = document.getElementById("errorMsg");
@@ -111,7 +111,7 @@ function buttonValidation() {
     let adress = document.getElementById("adress");
     let city = document.getElementById("city"); 
     let mail = document.getElementById("mail"); 
-    /*si tout les éléments du formulaire sont valide, tu libère le bouton*/
+    /*si tout les éléments du formulaire sont valide, libère le bouton*/
     if((firstName.validity.valid == true) && (lastName.validity.valid == true) && (adress.validity.valid == true) && (city.validity.valid == true) && (mail.validity.valid == true)) {
     noButton.style.display = "none";
     let msgNoComplete = document.getElementById("msgNoComplete");
@@ -136,6 +136,7 @@ new Promise(function(resolve){
     event.preventDefault();
         resolve();
 })}).then(function() {
+    /*envoie les informations d'achat */
     new Promise(function(resolve, reject) {
     var sendForm = new XMLHttpRequest();
     sendForm.onreadystatechange = function() {
@@ -168,5 +169,4 @@ new Promise(function(resolve){
 }).catch(function(error) {
     let blocError = document.getElementById("errorMsg");
     blocError.innerText = error;
-    console.log(error);
 })})

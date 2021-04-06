@@ -1,7 +1,7 @@
 /*si pageSelection est présent dans le session storage*/
-if(sessionStorage.getItem("pageSelection")){
+if(sessionStorage.getItem("pageSelection")) {
+    var pageSelection = sessionStorage.getItem("pageSelection");
 
-var pageSelection = sessionStorage.getItem("pageSelection");
     new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
@@ -65,8 +65,7 @@ var pageSelection = sessionStorage.getItem("pageSelection");
         console.log(error);
 
 /*si pageSelection n'est pas présent dans le session storage*/
-})}else{
+})}else {
     let blocError = document.getElementById("errorMsg");
-    blocError.innerText = 'Veuillez selectionner un objet';
-
+    blocError.innerHTML = 'Veuillez selectionner un objet sur la page principale<br><a href="index.html">Cliquez ici</a>';
 }
