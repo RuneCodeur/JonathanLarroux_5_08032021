@@ -11,18 +11,18 @@ new Promise(function(resolve, reject) {
     xhr.open("GET", "http://localhost:3000/api/teddies");
     xhr.send();
 
-    /*pour chaque item présent dans la liste */
+    /*pour chaque item présent dans la liste*/
 }).then(function(teddy) {
     for(let count = teddy.length-1; count >= 0; count --) {
 
-        /*crée une carte */
+        /*crée une carte*/
+        let teddyPrice = teddy[count]["price"]/100;
         let cardItem = document.getElementById("cardItem");
         let newCard = document.createElement ("div");
-        let teddyPrice = teddy[count]["price"]/100;
         newCard.classList.add("card");
         newCard.classList.add("m-4");
 
-        /*envoie l'ID de l'item selectionné dans le session storage */
+        /*envoie l'ID de l'item selectionné dans le session storage*/
         function select() {
             sessionStorage.setItem("pageSelection", teddy[count]["_id"]);
         }

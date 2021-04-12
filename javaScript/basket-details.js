@@ -1,5 +1,4 @@
 let basketItem = JSON.parse(sessionStorage.getItem("basketItem")).reverse();
-let noButton = document.getElementById("noButton");
 let ValueFirstName = document.getElementById("firstName");
 let valueLastName = document.getElementById("lastName");
 let valueAdress = document.getElementById("adress");
@@ -27,9 +26,9 @@ if(basketItem.length > 0) {
         newItemPrice.classList.add("border");
         newItemPrice.classList.add("col-sm-3");
         newItemPrice.classList.add("py-1");
-        startPrice += teddyPrice;
         newItemPrice.innerHTML = teddyPrice.toFixed(2) + " €";
         listBasket.prepend(newItemPrice);
+        startPrice += teddyPrice;
 
         /*crée le bloc et calcul du nom de chaque elements*/
         let newItemName = document.createElement("div");
@@ -81,7 +80,10 @@ function changeStage() {
 }}
 
 /******partie finaliser ma commande******/
-
+/*annule le comportement de base du bouton confirmer */
+finalButton.addEventListener("click",function(event) {
+    event.preventDefault();
+})
 /*calcul la validité de chaque élément du formulaire*/
 function buttonValidation() {
     let firstName = document.getElementById("firstName");
@@ -89,32 +91,26 @@ function buttonValidation() {
     let adress = document.getElementById("adress");
     let city = document.getElementById("city"); 
     let mail = document.getElementById("mail"); 
-    /*si tout les éléments du formulaire sont valide, libère le bouton*/
+    let msgNoComplete = document.getElementById("msgNoComplete");
+    /*si tout les éléments du formulaire sont valide, le bouton peux envoyer les infos*/
     if((firstName.validity.valid == true) && (lastName.validity.valid == true) && (adress.validity.valid == true) && (city.validity.valid == true) && (mail.validity.valid == true)) {
-    noButton.style.display = "none";
-    let msgNoComplete = document.getElementById("msgNoComplete");
-    msgNoComplete.innerText = '';
+        finalButton.setAttribute ('onclick', 'sendConfirm()');
+        msgNoComplete.innerText = '';
     
-    /*sinon, tu bloque le bouton*/
+    /*sinon, le bouton n'envoie pas les infos*/
     }else {
-    noButton.style.display = "block";
-    let msgNoComplete = document.getElementById("msgNoComplete");
-    msgNoComplete.innerText = '';
+        finalButton.setAttribute ('onclick', 'sendNotConfirm()');
+        msgNoComplete.innerText = '';
 }}
 
 /*si tu essaie de valider un formulaire non valide, tu signale au client*/
-noButton.addEventListener("click",function() {
+function sendNotConfirm() {
     let msgNoComplete = document.getElementById("msgNoComplete");
     msgNoComplete.innerText = "veuillez correctement remplire le formulaire";
-})
+}
 
-/*bouton confirmer mon achat */
-new Promise(function(resolve){
-    finalButton.addEventListener("click",function(event) {
-    event.preventDefault();
-        resolve();
-})}).then(function() {
-    /*envoie les informations d'achat */
+/*envoie les informations d'achat */
+function sendConfirm(){
     new Promise(function(resolve, reject) {
     var sendForm = new XMLHttpRequest();
     sendForm.onreadystatechange = function() {
@@ -147,4 +143,4 @@ new Promise(function(resolve){
 }).catch(function(error) {
     let blocError = document.getElementById("errorMsg");
     blocError.innerText = error;
-})})
+})}
