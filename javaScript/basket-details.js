@@ -8,7 +8,7 @@ let finalButton = document.getElementById("finalButton");
 let listBasket = document.getElementById("listbasket");
 let arrayJSON = [];
 let countmax = 0;
-startPrice = 0;
+let startPrice = 0;
 
 /*calcul du panier*/
 if(basketItem.length > 0) {
@@ -137,8 +137,8 @@ function sendConfirm(){
 
 /*envoie dans le session storage les infos utilisé pour la page confirmation*/
 }).then(function(responseServer) {
-    sessionStorage.setItem("orderId", responseServer["orderId"])
-    sessionStorage.removeItem("basketItem")
+    sessionStorage.setItem("orderId", responseServer["orderId"]);
+    sessionStorage.removeItem("basketItem");
     document.location.href = "confirmation.html";
 }).catch(function(error) {
     let blocError = document.getElementById("errorMsg");
