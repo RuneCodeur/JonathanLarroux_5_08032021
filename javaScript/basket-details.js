@@ -11,11 +11,11 @@ let countmax = 0;
 let startPrice = 0;
 
 /*calcul du panier*/
-if(basketItem.length > 0) {
+if (basketItem.length > 0) {
     /*fait apparaitre l'interface du panier*/
     document.getElementById("myBasket").style.display = "block";
     /*pour chaque teddy dans le panier */
-    for(let teddy of basketItem) {
+    for (let teddy of basketItem) {
         /*met chaque élément du panier dans un array(pour la finalisation de la commande)*/
         arrayJSON.push(teddy["_id"]);
 
@@ -60,9 +60,9 @@ if(basketItem.length > 0) {
         /*calcul du prix total*/
         let totalPrice = document.getElementById ("total-price");
         totalPrice.innerText = startPrice.toFixed(2) + " €";
-
+    }}
 /*si aucun item est présent dans le panier*/
-}}else {
+else {
         let blocError = document.getElementById("errorMsg");
         blocError.innerText = "Vous n'avez rien mis dans votre panier !";
 }
@@ -75,7 +75,7 @@ function changeStage() {
     document.getElementById("button-transition").style.display = "none";
     document.getElementById("fieldset").style.display = "block";
     sessionStorage.setItem("totalPrice", startPrice.toFixed(2) + " €");
-    for(var count = 0; count < buttonSup.length; count++) {
+    for (var count = 0; count < buttonSup.length; count++) {
         buttonSup[count].style.display = "none";
 }}
 
@@ -93,12 +93,12 @@ function buttonValidation() {
     let mail = document.getElementById("mail"); 
     let msgNoComplete = document.getElementById("msgNoComplete");
     /*si tout les éléments du formulaire sont valide, le bouton peux envoyer les infos*/
-    if((firstName.validity.valid == true) && (lastName.validity.valid == true) && (adress.validity.valid == true) && (city.validity.valid == true) && (mail.validity.valid == true)) {
+    if ((firstName.validity.valid == true) && (lastName.validity.valid == true) && (adress.validity.valid == true) && (city.validity.valid == true) && (mail.validity.valid == true)) {
         finalButton.setAttribute ('onclick', 'sendConfirm()');
         msgNoComplete.innerText = '';
     
     /*sinon, le bouton n'envoie pas les infos*/
-    }else {
+    } else {
         finalButton.setAttribute ('onclick', 'sendNotConfirm()');
         msgNoComplete.innerText = '';
 }}
@@ -106,7 +106,7 @@ function buttonValidation() {
 /*si tu essaie de valider un formulaire non valide, tu signale au client*/
 function sendNotConfirm() {
     let msgNoComplete = document.getElementById("msgNoComplete");
-    msgNoComplete.innerText = "veuillez correctement remplire le formulaire";
+    msgNoComplete.innerText = "Veuillez correctement remplir le formulaire.";
 }
 
 /*envoie les informations d'achat */
@@ -114,10 +114,10 @@ function sendConfirm(){
     new Promise(function(resolve, reject) {
     var sendForm = new XMLHttpRequest();
     sendForm.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 201) {
+        if (this.readyState == 4 && this.status == 201) {
             var responseServer = JSON.parse(this.responseText);
             resolve(responseServer);
-        }else if(this.readyState == 4 && this.status != 201) {
+        } else if (this.readyState == 4 && this.status != 201) {
             reject("le site est actuellement indisponible");
         }
     }

@@ -1,14 +1,14 @@
 /*si pageSelection est présent dans le session storage*/
-if(sessionStorage.getItem("pageSelection")) {
+if (sessionStorage.getItem("pageSelection")) {
     var pageSelection = sessionStorage.getItem("pageSelection");
 
     new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
-            if(this.readyState == 4 && this.status == 200) {
+            if (this.readyState == 4 && this.status == 200) {
                 var teddy = JSON.parse(this.responseText);
                 resolve(teddy);
-            }else if(this.readyState == 4 && this.status != 200) {
+            } else if (this.readyState == 4 && this.status != 200) {
                 reject("le site est actuellement indisponible");
             }
         }
@@ -33,7 +33,7 @@ if(sessionStorage.getItem("pageSelection")) {
         /*calcul du choix des couleurs */
         document.getElementById("textColor").innerHTML = "choix de la couleur : ";
         document.getElementById("color").style.display = "block";
-        for(let countColors = teddy["colors"].length-1; countColors >= 0; countColors --) {
+        for (let countColors = teddy["colors"].length-1; countColors >= 0; countColors --) {
             let ensembleChoice = document.getElementById("color");
             let newColor = document.createElement ("option");
             newColor.setAttribute ("value", teddy["colors"][countColors]);
@@ -65,7 +65,7 @@ if(sessionStorage.getItem("pageSelection")) {
         blocError.innerText = error;
 
 /*si pageSelection n'est pas présent dans le session storage*/
-})}else {
+})} else {
     let blocError = document.getElementById("errorMsg");
-    blocError.innerHTML = 'Veuillez selectionner un objet sur la page principale<br><a href="index.html">Cliquez ici</a>';
+    blocError.innerHTML = 'Veuillez sélectionner un objet sur la page principale<br><a href="index.html">Cliquez ici</a>';
 }

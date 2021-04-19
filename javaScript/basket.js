@@ -7,7 +7,7 @@ function calculBasket() {
         let basketSelect = document.getElementById("basket");
         basketSelect.innerText = "( " + maxBasketItem + " )";
     /*sinon, crée basketItem et tu dit 0 dans le panier */
-    }else {
+    } else {
         sessionStorage.setItem("basketItem", JSON.stringify([]));
         let basketSelect = document.getElementById("basket");
         basketSelect.innerText = "( 0 )";

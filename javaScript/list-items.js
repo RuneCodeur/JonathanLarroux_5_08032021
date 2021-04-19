@@ -1,10 +1,10 @@
 new Promise(function(resolve, reject) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status === 200) {
+        if (this.readyState == 4 && this.status === 200) {
             var teddy = JSON.parse(this.responseText);
             resolve(teddy);
-        }else if(this.readyState == 4 && this.status != 200) {
+        } else if (this.readyState == 4 && this.status != 200) {
             reject("le site est actuellement indisponible");
         }
     }
@@ -13,7 +13,7 @@ new Promise(function(resolve, reject) {
 
     /*pour chaque item présent dans la liste*/
 }).then(function(teddy) {
-    for(let count = teddy.length-1; count >= 0; count --) {
+    for (let count = teddy.length-1; count >= 0; count --) {
 
         /*crée une carte*/
         let cardItem = document.getElementById("cardItem");

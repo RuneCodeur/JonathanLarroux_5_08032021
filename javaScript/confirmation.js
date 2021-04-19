@@ -7,13 +7,13 @@ let erreur = document.getElementById('erreur');
 confirm();
 
 function confirm(){
-    if(sessionStorage.getItem("totalPrice") && sessionStorage.getItem("orderId")){
+    if (sessionStorage.getItem("totalPrice") && sessionStorage.getItem("orderId")){
         /*résume le prix */
         confirmation.style.display = "block";
         priceLocation.innerText = totalPrice;
 
         /*donne le numero de suivi */
         suiviLocation.innerText = suivi;
-    }else{
+    } else {
         erreur.innerHTML = "Une erreur est survenue lors de la validation de votre commande. <br> Veuillez contacter le service client.";
 }}
