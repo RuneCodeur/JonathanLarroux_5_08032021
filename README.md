@@ -1,15 +1,21 @@
-# Orinoco #
+projet 5 openclassrooms : construire un site e-commerce
 
-This is the back end server for Project 5 of the Junior Web Developer path.
+la partie frontend du site est construit avec les langage HTML, CSS et Javascript et ne necessite aucun procédé particuler pour son lancement.
+la partie backend à été fournis par l'école OpenClassrooms pour la réalisation du projet.
 
-### Prerequisites ###
+------ lancer le backend ------
 
-You will need to have Node and `npm` installed locally on your machine.
+pour lancer la partie backend, lancez un invite de commande et exécutez les commandes suivante:
 
-### Installation ###
+    cd "ADRESSE DU DOSSIER serveur"
+    node server
 
-Clone this repo. From within the project folder, run `npm install`. You 
-can then run the server with `node server`. 
-The server should run on `localhost` with default port `3000`. If the
-server runs on another port for any reason, this is printed to the
-console when the server starts, e.g. `Listening on port 3001`.
+le serveur se connecte sur le lien suivant:
+http://localhost:3000
+
+le site web est accessible en ouvrant le fichier index.html avec un navigateur web.
+
+-------------------------------
+
+si vous rencontrez un problème, envoyez un mail à l'adresse suivante:
+rackhamledev@gmail.com
